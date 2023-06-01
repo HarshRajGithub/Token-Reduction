@@ -63,10 +63,6 @@ print("After Removing Stop Words:",words)
 print("Stemmed tokens:", stemmed_tokens)
 print("Lemmatized tokens:", lemmatized_tokens)
 
-# Print results (sentences)
-# print("Original Sentences:", sentences)
-
-
 # For working with gpt-3
 '''import openai
 
@@ -81,7 +77,7 @@ def askGPT(text):
     return print(response.choices[0].text)
 def main():
     while True:
-        askGPT(sentences_final)
+        askGPT(text_final)
 
 main()
 '''

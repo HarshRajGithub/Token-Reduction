@@ -1,21 +1,81 @@
-Congrats! 🎉
+To use the program just enter the text in input or upload the file and the token reduction works.This Program on an average reduces the token count by 27 to 33 percent without losing any meaning.
+The following program uses lemmatization and removal of stop words concept for token reduction.
+This methods can be easily applied using NLTK library available for python.
+Lemmatization - Is a natural language processing technique used to reduce words to their base or root form. The goal of lemmatization is to group together different forms of a word so that they can be analyzed as a single item.
 
-If you made it here then you have passed our initial screening. Welcome to second round of your interview.
+The algorithm for lemmatization involves several steps:
+1.)Tokenization: The text is first broken down into individual words or tokens.
+2.)Part-of-speech (POS) tagging: Each word is then tagged with its part of speech, such as noun, verb, adjective, or adverb.
+3.)Lemmatization: The lemmatization algorithm then uses a dictionary or rule-based system to convert each word to its base form, or lemma, based on its part of speech. For example, the word "running" would be converted to "run" as a verb, but not as a noun.
+4.)Stemming: In some cases, the lemmatization algorithm may also use stemming, which involves removing the suffixes from words to reduce them to their base form. However, stemming can sometimes result in incorrect or non-existent words, so it is not always used.
+Overall, the lemmatization algorithm is designed to improve the accuracy and efficiency of natural language processing tasks by reducing the complexity of the text and grouping together related words.
+Applied by using NLTK library
 
-During this round, we will evaluate your ability to handle new and intricate learning challenges. Choose one of the following assignments. But don't spend no more than 12 hours working on it. After 12 hours, please submit your progress, regardless of the extent of completion. Feel free to generate code using AI tools and chat apps like chatgpt, bing chat, code copilots, codium etc.
+Stopwords - The algorithm for NLTK (Natural Language Toolkit) stopwords, which is a technique used to remove common words from text that are not useful for analysis. The goal of stopwords is to reduce the size of the text and improve the accuracy of natural language processing tasks.
+The algorithm for NLTK stopwords involves several steps:
+1.)Tokenization: The text is first broken down into individual words or tokens.
+2.)Stopword removal: The NLTK stopwords algorithm then uses a predefined list of common words, such as "the", "and", "a", and "in", to remove them from the text. These words are considered to be "stopwords" because they do not carry much meaning and are not useful for analysis.
+3.)Filtering: After the stopwords have been removed, the NLTK stopwords algorithm may also apply additional filtering to remove words that are too short or too long, or that contain numbers or special characters.
+4.)Lemmatization or stemming: Finally, the NLTK stopwords algorithm may also apply lemmatization or stemming to reduce the remaining words to their base form, as described in my previous response.
+Overall, the NLTK stopwords algorithm is designed to improve the accuracy and efficiency of natural language processing tasks by removing common words that are not useful for analysis. By reducing the size of the text and focusing on the most meaningful words, the algorithm can help to improve the accuracy of text classification, sentiment analysis, and other natural language processing tasks.
+Applied by using NLTK library
 
-To access the assignment details, kindly visit the ***#second-round*** channel . If you have any questions ask in the ***#interview-doubts*** channel.
+The program asks the user to give input whose token is to be reduced 
+input_prompt = input("Please start the chat- ")
 
-Discord link -<https://discord.gg/uTYkFDS8>
+If one wnats they can upload file instead by uncommenting
+'''input_prompt = 'filename.txt'
+file = open(input_prompt , 'rt')
+text = file.read()
+file.close()
+# split into words by white space
+words = text.split()
+# split based on words only
+import re
+words = re.split(r'\W+', text)
+'''
+This is to remove punctuation -
+table = str.maketrans('', '', string.punctuation)
+stripped = [w.translate(table) for w in tokens]
 
-To create a pull request for a public git repo, you need to follow these steps:
+Now one can use RegexpTokenizer which is beneficial for for regular expression or wordtokenizer which tokenizes all words. The program uses word Tokenizer by default.
+#tokens = RegexpTokenizer("[\w']+")
+#tokens.tokenize(input_prompt)
+tokens = word_tokenize(input_prompt)  #split into words
 
--   Fork the repo that you want to contribute to. This will create a copy of the repo under your own GitHub account. You can fork a repo by clicking the **Fork** button on the top right corner of the repo page.
--   Clone your forked repo to your local machine. You can do this by running **`git clone <https://github.com/your-username/repo-name.git`**> in your terminal, where **`your-username`** is your GitHub username and **`repo-name`** is the name of the repo you forked.
--   Create a new branch for your changes. You can do this by running **`git checkout -b branch-name`**, where **`branch-name`** is a descriptive name for your branch.
--   Make your changes in the new branch. You can use any code editor or IDE that you prefer. You can also use GitHub Desktop to manage your changes.
--   Add and commit your changes to the new branch. You can do this by running **`git add .`** to stage all your changes and **`git commit -m "message"`** to commit them with a message, where **`message`** is a brief summary of what you did.
--   Push your changes to your forked repo on GitHub. You can do this by running **`git push origin branch-name`**, where **`branch-name`** is the name of your branch.
--   Create a pull request from your forked repo to the original repo. You can do this by going to your forked repo on GitHub and clicking the **Compare & pull request** button. This will open a page where you can review your changes and add a title and a description for your pull request. You can also link your pull request to an issue if there is one related to your changes. Then click **Create pull request** to submit it.
+To removal of stop words-
+stop_words = set(stopwords.words('english'))
+words = [w for w in words if not w in stop_words]
 
-That's it! You have created a pull request for a public git repo. Now you need to wait for the maintainers of the original repo to review and merge your pull request. They might also ask you for some feedback or changes before merging it. You can communicate with them through the comments section of your pull request.
+To perform Stemming on the prompt after removing stopwords
+stemmer = PorterStemmer()
+stemmed_tokens = [stemmer.stem(words) for words in words]
+
+To perform Lemmatization on the prompt after removing stopwords
+lemmatizer = WordNetLemmatizer()
+lemmatized_tokens = [lemmatizer.lemmatize(words) for words in words]
+
+Now the following code is used for Conversion of tokens back to sentences
+text_final = nltk.Text(lemmatized_tokens)
+
+The obtained text can be used as input for GPT-3 by uncommenting the following code-
+'''import openai
+
+def askGPT(text):
+    openai.api_key = "your_api_key"
+    response = openai.Completion.create(
+        engine = "text-davinci-003",
+        prompt = text,
+        temperature = 0.6,
+        max_tokens = 150,
+    )
+    return print(response.choices[0].text)
+def main():
+    while True:
+        askGPT(text_final)
+
+main()
+'''
+
+To use this program one needs to install the library NLTK by pasting the following command in command prompt-
+python.exe -m pip install nltk

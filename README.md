@@ -1,5 +1,8 @@
 To use the program just enter the text in input or upload the file and the token reduction works.This Program on an average reduces the token count by 27 to 33 percent without losing any meaning.
 
+![Screenshot (282)](https://github.com/HarshRajGithub/Token-Reduction/assets/109783727/093dfa5d-de84-4674-ac85-91753ff59b85)
+
+
 The following program uses lemmatization and removal of stop words concept for token reduction.
 This methods can be easily applied using NLTK library available for python.
 
